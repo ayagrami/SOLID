@@ -1,31 +1,22 @@
 package com.directi.training.srp.exercise;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CarManager
 {
-    private List<Car> _carsDb = Arrays
-        .asList(new Car("1", "Golf III", "Volkswagen"), new Car("2", "Multipla", "Fiat"),
-            new Car("3", "Megane", "Renault"));
+    private CarRepository carRepository = new CarRepository();
 
     public Car getFromDb(final String carId)
     {
-        for (Car car : _carsDb) {
-            if (car.getId().equals(carId)) {
-                return car;
-            }
-        }
-        return null;
+        return carRepository.getById(carId);
     }
 
     public String getCarsNames()
     {
+        List<Car> cars = carRepository.getAll();
         StringBuilder sb = new StringBuilder();
-        for (Car car : _carsDb) {
-            sb.append(car.getBrand());
-            sb.append(" ");
-            sb.append(car.getModel());
+        for (Car car : cars) {
+            sb.append(car.getName());
             sb.append(", ");
         }
         return sb.substring(0, sb.length() - 2);
@@ -33,8 +24,9 @@ public class CarManager
 
     public Car getBestCar()
     {
+        List<Car> cars = carRepository.getAll();
         Car bestCar = null;
-        for (Car car : _carsDb) {
+        for (Car car : cars) {
             if (bestCar == null || car.getModel().compareTo(bestCar.getModel()) > 0) {
                 bestCar = car;
             }

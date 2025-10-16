@@ -27,4 +27,9 @@ public class Car
     {
         return _brand;
     }
+
+    public String getName()
+    {
+        return _brand + " " + _model;
+    }
 }
